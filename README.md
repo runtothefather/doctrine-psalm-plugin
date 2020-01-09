@@ -1,0 +1,1 @@
+# doctrine-psalm-plugin
