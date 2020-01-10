@@ -14,3 +14,9 @@ where $object can be instance of
 
 repository class from `@ORM\Entity(repositoryClass="Doctrine\Common\Persistence\ObjectRepository")`
 will be returned
+
+## Usage
+
+Add into your psalm.xml file into `<plugins>` section line
+
+`<plugin filename="vendor/runtothefather/doctrine-psalm-plugin/src/ReturnTypeProvider/GetRepositoryReturnTypeProvider.php"></plugin>`
