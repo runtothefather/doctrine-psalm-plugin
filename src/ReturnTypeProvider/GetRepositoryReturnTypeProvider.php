@@ -17,8 +17,6 @@ use Psalm\Internal\Analyzer\ProjectAnalyzer;
 use Psalm\Plugin\Hook\MethodReturnTypeProviderInterface;
 use Psalm\StatementsSource;
 use Psalm\Type;
-use Psalm\Type\Atomic\TLiteralClassString;
-use Psalm\Type\Union;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class GetRepositoryReturnTypeProvider implements MethodReturnTypeProviderInterface
