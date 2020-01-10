@@ -66,40 +66,44 @@ class GetRepositoryReturnTypeProvider implements MethodReturnTypeProviderInterfa
         AnnotationRegistry::registerLoader('class_exists');
         $reader = new AnnotationReader();
 
-        /** @var Union|null $inferred */
-        $inferred = $call_args[0]->value->inferredType ?? null;
+        $entityFqcn = null;
+        $class = null;
 
-        $returns = [];
+        if (isset($call_args[0])
+            && is_object($call_args[0])
+            && is_object($call_args[0]->value)
+            && property_exists($call_args[0]->value, 'class')
+        ) {
+            /* @var PhpParser\Node\Name */
+            $class = $call_args[0]->value->class;
+        }
 
-        if (null !== $inferred && 'getrepository' === $method_name_lowercase) {
-            foreach ($inferred->getAtomicTypes() as $type) {
-                if ($type instanceof TLiteralClassString) {
-                    $clz = $type->value;
-                    /** @var Entity|null $annot */
-                    $annot = $reader->getClassAnnotation(new \ReflectionClass($clz), Entity::class);
+        if (null !== $class) {
+            $entityFqcn = $class->getAttribute('resolvedName') ?? null;
+        }
 
-                    if (null !== $annot && null !== $annot->repositoryClass) {
-                        $returns[] = $annot->repositoryClass;
-                    } else {
-                        $returns[] = ObjectRepository::class;
-                    }
-                }
+        $return = null;
+
+        if (null !== $entityFqcn && 'getrepository' === $method_name_lowercase) {
+            /** @var Entity|null $annot */
+            $annot = $reader->getClassAnnotation(new \ReflectionClass($entityFqcn), Entity::class);
+
+            if (null !== $annot && null !== $annot->repositoryClass) {
+                $return = $annot->repositoryClass;
+            } else {
+                $return = ObjectRepository::class;
             }
 
-            if (0 === \count($returns)) {
+            if (null === $return) {
                 return Type::parseString(ObjectRepository::class);
             }
-
-            \array_unique($returns);
 
             $project_analyzer = ProjectAnalyzer::getInstance();
             $codebase = $project_analyzer->getCodebase();
 
-            foreach ($returns as $return) {
-                $codebase->classlikes->addFullyQualifiedClassName($return);
-            }
+            $codebase->classlikes->addFullyQualifiedClassName($return);
 
-            return Type::parseString(\implode('|', $returns));
+            return Type::parseString($return);
         }
 
         return null;

@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "vimeo/psalm": "^3.6",
+        "vimeo/psalm": "^3.8",
         "doctrine/orm": "^2.6",
         "symfony/doctrine-bridge": "^4.3"
     },
