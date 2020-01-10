@@ -7,10 +7,10 @@ for cases like this
 
 where $object can be instance of 
 
-> Doctrine\Common\Persistence\ObjectManager
-> Symfony\Bridge\Doctrine\RegistryInterface
-> Doctrine\Common\Persistence\AbstractManagerRegistry
-> Doctrine\Common\Persistence\ManagerRegistry
+> Doctrine\Common\Persistence\ObjectManager  
+> Symfony\Bridge\Doctrine\RegistryInterface  
+> Doctrine\Common\Persistence\AbstractManagerRegistry  
+> Doctrine\Common\Persistence\ManagerRegistry  
 
 repository class from `@ORM\Entity(repositoryClass="Doctrine\Common\Persistence\ObjectRepository")`
 will be returned
