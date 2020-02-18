@@ -6,10 +6,14 @@ namespace RunToTheFather\ReturnTypeProvider;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use Doctrine\Common\Persistence\AbstractManagerRegistry;
-use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\Common\Persistence\AbstractManagerRegistry as AbstractManagerRegistryAlias;
+use Doctrine\Common\Persistence\ManagerRegistry as ManagerRegistryAlias;
+use Doctrine\Common\Persistence\ObjectManager as ObjectManagerAlias;
+use Doctrine\Common\Persistence\ObjectRepository as ObjectRepositoryAlias;
+use Doctrine\Persistence\AbstractManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectRepository;
 use Doctrine\ORM\Mapping\Entity;
 use Psalm\CodeLocation;
 use Psalm\Context;
@@ -31,6 +35,10 @@ class GetRepositoryReturnTypeProvider implements MethodReturnTypeProviderInterfa
             RegistryInterface::class,
             AbstractManagerRegistry::class,
             ManagerRegistry::class,
+            AbstractManagerRegistryAlias::class,
+            ManagerRegistryAlias::class,
+            ObjectManagerAlias::class,
+            ObjectRepositoryAlias::class
         ];
     }
 
